@@ -1,8 +1,8 @@
-package com.spacemooncake.iteractivetap
+package com.spacemooncake.iteractivetap.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.spacemooncake.iteractivetap.ui.main.MainFragment
+import com.spacemooncake.iteractivetap.R
 
 class MainActivity : AppCompatActivity() {
 
