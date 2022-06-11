@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">IteractiveTap</string>
+    <string name="button_to_top">button to top</string>
 </resources>
