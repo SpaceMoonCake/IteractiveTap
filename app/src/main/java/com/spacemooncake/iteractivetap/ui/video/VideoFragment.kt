@@ -73,7 +73,7 @@ class VideoFragment : Fragment() {
 
     private fun startTimer() {
         with(binding) {
-            Thread(Runnable {
+            Thread{
                 while (interactiveIsRunning) {
                     val currentDuration = video.duration
                     val currentPosition = video.currentPosition
@@ -81,7 +81,7 @@ class VideoFragment : Fragment() {
                     timerLeft.progress = progress
                     timerRight.progress = progress
                 }
-            }).start()
+            }.start()
         }
     }
 
