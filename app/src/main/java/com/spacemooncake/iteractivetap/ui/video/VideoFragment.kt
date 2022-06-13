@@ -23,6 +23,7 @@ class VideoFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var sourceVideo: List<Video>
     private var interactiveIsRunning: Boolean = false
+    private var isInteractiveVin: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,66 +36,85 @@ class VideoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sourceVideo = viewModel.getVideoFromLocalStorage()
-        bindView()
+        startInteractive()
     }
 
 
-    private fun bindView() {
-        with(binding) {
-            interactiveIsRunning = true
-            video.setVideoURI(Uri.parse(sourceVideo[0].sourceVideo))
-            video.start()
-            butterflyFly()
-            Thread(Runnable {
-                while (interactiveIsRunning) {
-                    val currentDuration = binding.video.duration
-                    val currentPosition = binding.video.currentPosition
-                    val progress = (currentPosition * 100) / currentDuration
-                    binding.timerLeft.progress = progress
-                    binding.timerRight.progress = progress
-                }
-            }).start()
-            butterflyButton.setOnClickListener {
-                interactiveIsRunning = false
-                butterflyButton.visibility = View.GONE
-                video.setVideoURI(Uri.parse(sourceVideo[3].sourceVideo))
+    private fun startInteractive() {
+        interactiveIsRunning = true
+        startVideo()
+        startTimer()
+        flyButterfly()
+        setListenerToCatchButterfly()
+    }
+
+    private fun setListenerToCatchButterfly() {
+        binding.butterflyButton.setOnClickListener {
+            interactiveIsRunning = false
+            isInteractiveVin = true
+            andInteractive(isInteractiveVin)
+        }
+    }
+
+    private fun andInteractive(isInteractiveVin: Boolean) {
+        if (isInteractiveVin) {
+            with(binding){
+                interactiveGroup.visibility = View.GONE
+                video.setVideoURI(Uri.parse(sourceVideo[1].sourceVideo))
                 video.start()
             }
+        } else {
+            with(binding){
+                interactiveGroup.visibility = View.GONE
+                failedTask.visibility = View.VISIBLE
+            }
+        }
+    }
 
+    private fun startTimer() {
+        with(binding) {
+            Thread(Runnable {
+                while (interactiveIsRunning) {
+                    val currentDuration = video.duration
+                    val currentPosition = video.currentPosition
+                    val progress = (currentPosition * 100) / currentDuration
+                    timerLeft.progress = progress
+                    timerRight.progress = progress
+                }
+            }).start()
+        }
+    }
+
+    private fun startVideo() {
+        with(binding) {
+            video.setVideoURI(Uri.parse(sourceVideo[0].sourceVideo))
+            video.start()
         }
     }
 
 
-    private fun butterflyFly() {
-        val path1 = Path()
-        var rectf = RectF(400F, 100F, 700F, 2000F)
-//      var rectf2 = RectF(400F, 200F, 700F, 1000F)
-//      var rectf3 = RectF(400F, 200F, 1000F, 2000F)
-        path1.addOval(rectf, Path.Direction.CCW)
-//        path1.addOval(rectf2, Path.Direction.CW )
-//        path1.addOval(rectf3, Path.Direction.CCW )
-        var pathAnimator = ObjectAnimator
-            .ofFloat(
-                binding.butterflyButton,
-                "x",
-                "y", path1
-            )
-        pathAnimator.duration = 9000
+    private fun flyButterfly() {
+        var pathAnimator: ObjectAnimator = ObjectAnimator
+            .ofFloat(binding.butterflyButton, "x", "y", getPathButterfly())
+        pathAnimator.duration = 9500
         pathAnimator.start()
         pathAnimator.addListener(
             onEnd = {
                 with(binding) {
                     if (interactiveIsRunning) {
-                        timerLeft.visibility = View.GONE
-                        timerRight.visibility = View.GONE
-                        butterflyButton.visibility = View.GONE
-                        textTask.visibility = View.GONE
-                        failedTask.visibility = View.VISIBLE
+                        andInteractive(isInteractiveVin)
                     }
                 }
             }
         )
 
+    }
+
+    private fun getPathButterfly() : Path{
+        val path = Path()
+        var rectf = RectF(400F, 100F, 700F, 2000F)
+        path.addOval(rectf, Path.Direction.CCW)
+        return path
     }
 
     override fun onDestroyView() {

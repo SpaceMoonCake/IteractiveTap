@@ -57,6 +57,8 @@
         android:id="@+id/text_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,11 +68,19 @@
         android:id="@+id/failed_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"
         android:text="@string/failed_task"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/interactiveGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="butterfly_button, timer_left, timer_right, text_task" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
