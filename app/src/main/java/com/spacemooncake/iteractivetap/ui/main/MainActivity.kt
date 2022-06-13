@@ -1,7 +1,5 @@
 package com.spacemooncake.iteractivetap.ui.main
 
-import android.app.Activity
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.spacemooncake.iteractivetap.R

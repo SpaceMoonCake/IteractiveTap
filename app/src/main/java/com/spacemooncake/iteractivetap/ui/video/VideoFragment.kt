@@ -58,13 +58,13 @@ class VideoFragment : Fragment() {
 
     private fun andInteractive(isInteractiveVin: Boolean) {
         if (isInteractiveVin) {
-            with(binding){
+            with(binding) {
                 interactiveGroup.visibility = View.GONE
                 video.setVideoURI(Uri.parse(sourceVideo[1].sourceVideo))
                 video.start()
             }
         } else {
-            with(binding){
+            with(binding) {
                 interactiveGroup.visibility = View.GONE
                 failedTask.visibility = View.VISIBLE
             }
@@ -94,26 +94,24 @@ class VideoFragment : Fragment() {
 
 
     private fun flyButterfly() {
-        var pathAnimator: ObjectAnimator = ObjectAnimator
+        val pathAnimator: ObjectAnimator = ObjectAnimator
             .ofFloat(binding.butterflyButton, "x", "y", getPathButterfly())
         pathAnimator.duration = 9500
         pathAnimator.start()
         pathAnimator.addListener(
             onEnd = {
-                with(binding) {
-                    if (interactiveIsRunning) {
-                        andInteractive(isInteractiveVin)
-                    }
+                if (interactiveIsRunning) {
+                    andInteractive(isInteractiveVin)
                 }
             }
         )
 
     }
 
-    private fun getPathButterfly() : Path{
+    private fun getPathButterfly(): Path {
         val path = Path()
-        var rectf = RectF(400F, 100F, 700F, 2000F)
-        path.addOval(rectf, Path.Direction.CCW)
+        val rect = RectF(400F, 100F, 700F, 2000F)
+        path.addOval(rect, Path.Direction.CCW)
         return path
     }
 
