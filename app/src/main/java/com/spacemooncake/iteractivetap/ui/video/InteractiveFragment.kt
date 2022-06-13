@@ -11,15 +11,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.animation.addListener
 import androidx.fragment.app.Fragment
-import com.spacemooncake.iteractivetap.databinding.VideoFragmentBinding
+import com.spacemooncake.iteractivetap.databinding.InteractiveFragmentBinding
 import com.spacemooncake.iteractivetap.domain.entities.Video
 import com.spacemooncake.iteractivetap.ui.main.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class VideoFragment : Fragment() {
+class InteractiveFragment : Fragment() {
     private val viewModel: MainViewModel by viewModel()
-    private var _binding: VideoFragmentBinding? = null
+    private var _binding: InteractiveFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var sourceVideo: List<Video>
     private var interactiveIsRunning: Boolean = false
@@ -29,7 +29,7 @@ class VideoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = VideoFragmentBinding.inflate(inflater, container, false)
+        _binding = InteractiveFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -121,6 +121,6 @@ class VideoFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() = VideoFragment()
+        fun newInstance() = InteractiveFragment()
     }
 }
